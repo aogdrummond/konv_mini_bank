@@ -1,8 +1,13 @@
+DEPOSIT_DIGIT = 1
+WITHDRAW_DIGIT = 2
+EXTRACT_AND_BALANCE_DIGIT = 3
+EXIT_DIGIT = 4
+
 menu_options = {
-    1: "Deposit",
-    2: "Withdraw",
-    3: "Extract and Balance",
-    4: "Exit",
+    DEPOSIT_DIGIT: "Deposit",
+    WITHDRAW_DIGIT: "Withdraw",
+    EXTRACT_AND_BALANCE_DIGIT: "Extract and Balance",
+    EXIT_DIGIT: "Exit",
 }
 
 
@@ -27,7 +32,6 @@ def confirm_operation(operation: str, value: int) -> bool:
 
     except:
         print("\n The value must be a positive integer.")
-        pass
 
 
 def client_do_another_operation() -> bool:
@@ -43,3 +47,34 @@ def client_do_another_operation() -> bool:
             return False
         else:
             print("\n The answer must be whether 'y'[yes] or 'n'[no].")
+
+
+def run_chosen_operation(client, option: int):
+    """
+    Decides action for the client to be taken and his/her
+    state based on the chosen option
+    """
+    if option == DEPOSIT_DIGIT:
+        value = input("\n How much do you want to deposit? ")
+        confirmation = confirm_operation(operation="deposit", value=value)
+        if confirmation == "y":
+            client.deposit(value)
+        client.is_online = client_do_another_operation()
+        return client
+
+    if option == WITHDRAW_DIGIT:
+        value = input("\n How much do you want to withdraw? ")
+        confirmation = confirm_operation(operation="withdraw", value=value)
+        if confirmation == "y":
+            client.withdraw(value)
+        client.is_online = client_do_another_operation()
+        return client
+
+    if option == EXTRACT_AND_BALANCE_DIGIT:
+        client.extract_and_balance()
+        client.is_online = client_do_another_operation()
+        return client
+
+    if option == EXIT_DIGIT:
+        client.is_online = False
+        return client
