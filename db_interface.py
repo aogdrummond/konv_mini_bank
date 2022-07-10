@@ -1,20 +1,37 @@
 import mysql.connector
 
-mydb = mysql.connector.connect(host="localhost", user="usuario", password="senha")
+from mysql_querys import (
+    QueryToDropClients,
+    QueryToDropTransactions,
+    QueryToUseDb,
+    QueryToCreateClients,
+    QueryToCreateTrasactions,
+)
 
+mydb = mysql.connector.connect(host="localhost", user="usuario", password="senha")
 cursor = mydb.cursor()
-cursor.execute("USE bank_db")
 
 
 class dB_Cursor:
     def __init__(self):
         self.cursor = cursor
 
+    def setup_db(self):
+
+        self.cursor.execute(QueryToUseDb)
+        self.cursor.execute(QueryToCreateClients)
+        self.cursor.execute(QueryToCreateTrasactions)
+
     def create_table(self, table_name: str):
 
         self.cursor.execute(
             f"CREATE TABLE {table_name}(id int PRIMARY KEY AUTO_INCREMENT)"
         )
+
+    def init_database(self):
+
+        self.cursor.execute(QueryToCreateClients)
+        self.cursor.execute(QueryToCreateTrasactions)
 
     def create_data(self, table_name: str):
 
@@ -26,32 +43,14 @@ class dB_Cursor:
 
     def init_database_with_data(self):
 
-        self.cursor.execute(
-            "CREATE TABLE Clients (CPF varchar(11), \
-                        client_id int NOT NULL AUTO_INCREMENT,\
-                        PRIMARY KEY (client_id), \
-                        UNIQUE KEY CPF (CPF)) ENGINE=InnoDB \
-                        AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 \
-                        COLLATE=utf8mb4_unicode_ci;"
-        )
+        self.cursor.execute(QueryToCreateClients)
 
         for i in range(1, 10):
             self.cursor.execute(
                 f"INSERT INTO Clients (CPF) VALUES (0102030405{str(i)})"
             )
 
-        self.cursor.execute(
-            "CREATE TABLE Transactions (value int NOT NULL, \
-                        date datetime NOT NULL, \
-                        transaction_id int NOT NULL AUTO_INCREMENT, \
-                        client_id int NOT NULL, \
-                        PRIMARY KEY (transaction_id), \
-                        UNIQUE KEY transaction_id (transaction_id), \
-                        KEY client_id (client_id), \
-                        FOREIGN KEY(client_id) \
-                        REFERENCES Clients (client_id)) ENGINE=InnoDB AUTO_INCREMENT=1 \
-                        DEFAULT CHARSET=utf8mb4;"
-        )
+        self.cursor.execute(QueryToCreateTrasactions)
 
         for i in range(1, 10):
             self.cursor.execute(
@@ -62,9 +61,9 @@ class dB_Cursor:
 
     def clean_database(self):
 
-        self.cursor.execute("USE bank_db")
-        self.cursor.execute("DROP TABLES Transactions")
-        self.cursor.execute("DROP TABLES Clients")
+        self.cursor.execute(QueryToUseDb)
+        self.cursor.execute(QueryToDropTransactions)
+        self.cursor.execute(QueryToDropClients)
 
     def create_new_client(self, CPF):
 
@@ -80,7 +79,7 @@ class dB_Cursor:
         return len(cursor.fetchall()) > 0
 
     def insert_transaction_in_db(self, value: int, date: str, client_id: int):
-        """"""
+        """ """
         cursor.execute(
             f"INSERT INTO Transactions (value, date, client_id) VALUES({value},'{date}',{client_id})"
         )
@@ -106,5 +105,7 @@ class dB_Cursor:
             return int(balance)
 
     def commit(self):
-        """ """
+        """
+        Commits operation's data to the database
+        """
         mydb.commit()

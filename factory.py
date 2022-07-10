@@ -3,6 +3,7 @@ from db_interface import dB_Cursor
 from utils import get_smallest_notes_combination, CPF_digits, is_valid_CPF
 
 cursor = dB_Cursor()
+cursor.setup_db()
 
 
 class Client:
@@ -91,7 +92,7 @@ class Client:
         """
 
         print("")
-        print("Movementation", "      ", "     Date")
+        print("Movement", "        ", "     Date")
 
         for transaction in extract:
             print(transaction[0], "                ", str(transaction[1]))
@@ -127,7 +128,8 @@ class Client:
     def commit_to_db(self):
         """"""
         cursor.commit()
-        
+
+
 class Transaction:
     def __init__(self, value: int, client_id: int):
         self.value = value
