@@ -46,7 +46,7 @@ $ pip install -r requirements.txt
 ```
 &nbsp;
 
-![Procedure to insert persistance](img\volume_change.png)
+![Procedure to insert persistance](img/volume_change.png)
 
 ### If you aren't interested on persistance, the file may remain unchanged
 
