@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+
 def CPF_digits(CPF: str) -> str:
     """
     Remove special characters commonly inserted on CPF

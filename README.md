@@ -37,6 +37,20 @@ $ python -m venv konv_bank_venv
 $ pip install -r requirements.txt
 ```
 &nbsp;
+
+### Only in the case you are interest on persisting database's data when its container stops, inserts the field "volumes" like in the example below, in the following order:
+
+```
+ volumes:
+     - path\to\storage\folder:/var/lib/mysql
+```
+&nbsp;
+
+![Procedure to insert persistance](img\volume_change.png)
+
+### If you aren't interested on persistance, the file may remain unchanged
+
+&nbsp;
 ### Download image and run container.
 ```
 $ docker-compose up
