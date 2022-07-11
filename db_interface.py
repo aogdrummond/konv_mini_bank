@@ -29,11 +29,17 @@ class dB_Cursor:
         )
 
     def init_database(self):
-
+        """
+        Initiate database with required tables, it
+        they don't exist yet.
+        """
         self.cursor.execute(QueryToCreateClients)
         self.cursor.execute(QueryToCreateTrasactions)
 
     def create_data(self, table_name: str):
+        """
+        Create single sample on database.
+        """
 
         self.cursor.execute(f"INSERT INTO {table_name} VALUES()")
 
@@ -42,6 +48,11 @@ class dB_Cursor:
         self.cursor.execute(f"DROP TABLE {table_name}")
 
     def init_database_with_data(self):
+        """
+        Initiate database with samples, creating the tables
+        if required and filling each on them with some
+        samples of data.
+        """
 
         self.cursor.execute(QueryToCreateClients)
 
@@ -60,43 +71,55 @@ class dB_Cursor:
         print("Database initiated with data")
 
     def clean_database(self):
-
+        """
+        Drop all the tables from db.
+        """
         self.cursor.execute(QueryToUseDb)
         self.cursor.execute(QueryToDropTransactions)
         self.cursor.execute(QueryToDropClients)
 
-    def create_new_client(self, CPF):
+    def create_new_client(self, CPF: str):
 
         cursor.execute(f"INSERT INTO Clients (CPF) VALUES('{CPF}')")
         print("\n New client registered.")
 
-    def client_exists(self, CPF):
+    def client_exists(self, CPF: str) -> bool:
         """
-        Check there is a client registered on db with given
-        value of CPF
+        Check if there is a client registered on db with given
+        value of CPF.
         """
         cursor.execute(f"SELECT * from Clients WHERE CPF={CPF};")
         return len(cursor.fetchall()) > 0
 
     def insert_transaction_in_db(self, value: int, date: str, client_id: int):
-        """ """
+        """
+        Insert data of Transaction in Transactions table.
+        """
         cursor.execute(
             f"INSERT INTO Transactions (value, date, client_id) VALUES({value},'{date}',{client_id})"
         )
 
-    def search_id_from_CPF(self, CPF):
-        """ """
+    def search_id_from_CPF(self, CPF: str) -> int:
+        """
+        Returns the primary key, client_id, for a sample in Clients
+        table where CPF equals searched value.
+        """
         cursor.execute(f"SELECT client_id FROM Clients WHERE CPF={CPF}")
         return cursor.fetchall()[0][0]
 
     def obtain_extract(self, id: int) -> list:
-
+        """
+        Obtain the extract in db with all the transactions
+        made by a client identified by its id.
+        """
         cursor.execute(f"SELECT value,date FROM Transactions WHERE client_id={id}")
 
         return cursor.fetchall()
 
     def calculates_balance(self, id: int) -> int:
-
+        """
+        Calculates current balance base on all the transactions made on database.
+        """
         cursor.execute(f"SELECT SUM(value) FROM Transactions WHERE client_id={id}")
         balance = cursor.fetchall()[0][0]
         if balance == None:
@@ -106,6 +129,6 @@ class dB_Cursor:
 
     def commit(self):
         """
-        Commits operation's data to the database
+        Commits operation's data to the database.
         """
         mydb.commit()

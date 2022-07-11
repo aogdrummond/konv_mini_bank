@@ -7,9 +7,9 @@ if __name__ == "__main__":
 
     while client.is_online:
 
-        client.commit_to_db()
         print_menu()
-        option = int(input("\n Enter your choice: "))
+        option = int(input("\n Enter the number of your choice: "))
         client = run_chosen_operation(client, option)
         client.commit_to_db()
+
     print("\n Thank you for using our service.")
