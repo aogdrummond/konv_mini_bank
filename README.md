@@ -50,8 +50,10 @@ pip install -r requirements.txt
 
 ```
  volumes:
-     - path\to\storage\folder:/var/lib/mysql
+     - path\to\storage\folder:/var/lib/mysql 
 ```
+### The folder to storage must be empty.
+
 &nbsp;
 
 ![Procedure to insert persistance](img/volume_change.png)
