@@ -65,7 +65,7 @@ class Client:
                 print("\n The value must be an integer.")
 
     def transact(self, value: int):
-        """Make a transaction with database"""
+        """Make a transaction in database"""
 
         if value == 0:
             raise ValueError("\n The value for a transaction must be not null")
@@ -126,7 +126,10 @@ class Client:
             return False
 
     def commit_to_db(self):
-        """"""
+        """
+        Commit local changes to database (send changes on console
+        to remote db)
+        """
         cursor.commit()
 
 
