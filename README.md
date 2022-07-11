@@ -80,6 +80,21 @@ $ python main.py
 
 &nbsp;
 
-<img src="img\usage_flow.png"
-     style="float: right; margin-right: 60px;"
-/>
+
+![Example of usage](img/usage_flow.png)
+
+
+## **How to use the automatted tests**
+
+### Unit tests:.
+
+```
+python tests\unit_tests.py 
+```
+### Integration tests:.
+
+```
+python tests\int_tests.py 
+```
+
+* **Be aware, the automatted tests clean the whole database after execution.**

@@ -47,7 +47,7 @@ def test_create_data():
 def test_extract():
 
     test_cursor.init_database_with_data()
-    mock_client_id = 1
+    mock_client_id = 9
     expected_extract = [(10, datetime(2000, 10, 10, 22, 22, 22))]
     received_extract = test_cursor.obtain_extract(mock_client_id)
     test_cursor.clean_database()
