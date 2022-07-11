@@ -40,6 +40,16 @@ cd konv_mini_bank
 python -m venv konv_bank_venv
 ```
 &nbsp;
+
+
+### Activate the virtual environment.
+
+```
+konv_bank_venv\Scrips\activate [Windows] 
+or
+konv_bank_venv\bin\activate [Linux/Mac] 
+```
+&nbsp;
 ### Install virtual environment dependencies.
 ```
 pip install -r requirements.txt
@@ -71,19 +81,12 @@ Tip: To acess the images available on DockerHub you need to be logged in to Dock
 ### After those steps, the container with the database should be running and connected to your system, and the aplication is ready to run.
 
 
-
-### From applications directory, activate the virtual environment.
-
-```
-konv_bank_venv\Scrips\activate [Windows] 
-or
-konv_bank_venv\bin\activate [Linux/Mac] 
-```
 &nbsp;
 
 
 ## **How to use**
 * ### To start it on your console, just run "main.py" file:
+
 ```
 python main.py
 ```
