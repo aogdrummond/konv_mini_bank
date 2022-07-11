@@ -25,6 +25,11 @@ def confirm_operation(operation: str, value: int) -> bool:
     """
     try:
         value = int(value)
+        if value <= 0:
+            raise ValueError
+        if type(value) != int:
+            raise TypeError
+
         answer = input(
             f"\n Are you sure you want to {operation} {value} reais?[y/n] "
         ).lower()
@@ -77,4 +82,8 @@ def run_chosen_operation(client, option: int):
 
     if option == EXIT_DIGIT:
         client.is_online = False
+        return client
+
+    else:
+        print("\n You must choose one between currently available options. \n")
         return client
